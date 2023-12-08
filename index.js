@@ -32,7 +32,7 @@ const typeDefs = gql`
     }
 
     type User {
-        id: ID
+        id: Int
         name: String!
         email: String!
         age: Int
@@ -47,6 +47,7 @@ const typeDefs = gql`
         highlightProduct: Product
         numbers: [Int!]!
         users: [User]
+        user(id: Int): User
     }
 `;
 
@@ -99,6 +100,10 @@ const resolvers = {
         },
         users() {
             return users
+        },
+        user(_, args) {
+            const selected = users.filter(u => u.id == args.id)
+            return selected ? selected[0] : null
         }
     }
 };
