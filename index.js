@@ -24,6 +24,7 @@ const typeDefs = gql`
         actualTime: Date
         loggedUser: User
         highlightProduct: Product
+        numbers: [Int!]!
     }
 `;
 
@@ -65,6 +66,14 @@ const resolvers = {
                 price: 10000.00,
                 discount: 0.50
             }
+        },
+        numbers() {
+            const asc = ( a, b ) => a - b
+            let numeros = new Set();
+            while (numeros.size < 6) {
+                numeros.add(parseInt(Math.random() * 60 + 1));
+            }
+            return Array.from(numeros).sort(asc);
         }
     }
 };
