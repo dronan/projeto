@@ -4,10 +4,8 @@ type Mutation {
     ): User!
 
     updateUser(
-        id: Int!,
-        name: String,
-        email: String,
-        age: Int
+        filter: UserFilter!
+        data: UserInput!
     ): User!
 
     deleteUser(
