@@ -1,17 +1,23 @@
 const { users, nextId } = require('../data/db')
 
 module.exports = {
-   newUser(_, { name, email, age }) {
-      const user = {
-         id: nextId(),
-         name,
-         email,
-         age,
-         profile_id: 1,
-         status: 'ACTIVE'
-      }
+    newUser(_, args) {
 
-      users.push(user)
-      return user
-   }
+        const existentEmail = users.some(u => u.email === args.email)
+
+        if (existentEmail) {
+            throw new Error('Email already registered')
+        }
+
+        const user = {
+            id: nextId(),
+            ...args,
+            profile_id: 1,
+            status: 'ACTIVE'
+        }
+
+        users.push(user)
+        return user
+    }
+    
 }
