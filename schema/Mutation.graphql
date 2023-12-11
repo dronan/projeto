@@ -3,7 +3,14 @@ type Mutation {
         name: String,
         email: String,
         age: Int
-    ): User
+    ): User!
+
+    updateUser(
+        id: Int!,
+        name: String,
+        email: String,
+        age: Int
+    ): User!
 
     deleteUser(
         id: ID!
