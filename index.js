@@ -5,25 +5,46 @@ const users = [
         id: 1,
         name: "João Silva",
         email: "joao@gmail.com",
-        age: 29
+        age: 29,
+        profile_id: 1,
     },
     {
         id: 2,
         name: "Rafael Junior",
         email: "rafael@gmail.com",
-        age: 31
+        age: 31,
+        profile_id: 2,
     },
     {
         id: 3,
         name: "Daniela Smith",
         email: "daniela@gmail.com",
-        age: 24
+        age: 24,
+        profile_id: 1,
     }
 ]
+
+const profiles = [
+    {
+        id: 1,
+        name: "Admin"
+    },
+    {
+        id: 2,
+        name: "Common"
+    }
+]
+
+
 
 const typeDefs = gql`
     scalar Date
     
+    type Profile {
+        id: Int
+        name: String
+    }
+
     type Product {
         name: String!
         price: Float!
@@ -38,6 +59,7 @@ const typeDefs = gql`
         age: Int
         salary: Float
         vip: Boolean
+        profile: Profile
     }
 
     type Query {
@@ -48,6 +70,8 @@ const typeDefs = gql`
         numbers: [Int!]!
         users: [User]
         user(id: Int): User
+        profiles: [Profile]
+        profile(id: Int): Profile
     }
 `;
 
@@ -58,6 +82,10 @@ const resolvers = {
         // salary comes from the database as real_salary and it's converted to salary, that is used by graphql
         salary(user) {
             return user.real_salary
+        },
+        profile(user) {
+            const selected = profiles.filter(p => p.id == user.profile_id)
+            return selected ? selected[0] : null
         }
     },
     Product: {
@@ -101,10 +129,17 @@ const resolvers = {
         users() {
             return users
         },
-        user(_, args) {
-            const selected = users.filter(u => u.id == args.id)
+        user(_, { id } ) {
+            const selected = users.filter(u => u.id == id)
             return selected ? selected[0] : null
-        }
+        },
+        profiles() {
+            return profiles
+        },
+        profile(_, { id }) {
+            const selected = profiles.filter(p => p.id == id)
+            return selected ? selected[0] : null
+        },
     }
 };
 
