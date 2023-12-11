@@ -1,8 +1,6 @@
 type Mutation {
     newUser(
-        name: String,
-        email: String,
-        age: Int
+        data: UserInput!
     ): User!
 
     updateUser(
@@ -13,6 +11,6 @@ type Mutation {
     ): User!
 
     deleteUser(
-        id: ID!
+        filter: UserFilter!
     ): User
 }
