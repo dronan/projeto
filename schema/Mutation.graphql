@@ -4,4 +4,8 @@ type Mutation {
         email: String,
         age: Int
     ): User
+
+    deleteUser(
+        id: ID!
+    ): User
 }
