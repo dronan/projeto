@@ -8,7 +8,8 @@ module.exports = {
   connection: {
     database: 'exercises',
     user:     'postgres',
-    password: 'postgrespw'
+    password: 'postgrespw',
+    port: 55000,
   },
   pool: {
     min: 2,
